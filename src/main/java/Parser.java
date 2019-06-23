@@ -7,11 +7,11 @@ public class Parser {
     private Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X){1}");
     private Pattern operation = Pattern.compile("\\+|-|\\*|/");
 
-    public Parser(String line) {
-
+    void parse  (String line){
         String a;
         String b;
         String op;
+        //String line;
 
         Matcher matcherArabic = arabic.matcher(line);
         Matcher matcherRoman = roman.matcher(line);
@@ -32,6 +32,11 @@ public class Parser {
         } else {
             //createExeption("Не соответствует нужному виду");
         }
+    }
+
+
+    public Parser(String line) {
+
 
 
     }

@@ -9,10 +9,10 @@ public class Calculator {
         Scanner scnr = new Scanner(System.in);
         System.out.println("Введите выражение вида \"число\" \"операция\" \"число\" ");
         String line = scnr.nextLine();
-        System.out.println(search(line).print());
+        System.out.println(parse(line).print());
     }
 
-    public static Exp search(String line) {
+    public static Exp parse(String line) {
         //Exp expression = new Exp();
 
         String a;
@@ -67,7 +67,7 @@ public class Calculator {
 
     }
 
-    public static Result Exec (Exp exp){
+    public static Result Execute (Exp exp){
         String a = exp.getNumberA();
         String b = exp.getNumberB();
         String op = exp.getOperation();
@@ -78,10 +78,29 @@ public class Calculator {
         if(type.equals("roman")){
            numberA = getRoman(a);
            numberB = getRoman(b);
+            //to do
         }
+        if(type.equals("arabic")){
+            numberA = Integer.parseInt(a);
+            numberB = Integer.parseInt(b);
+        }
+
 
         return new Result();
     }
+
+    public static double operate (int a, int b, String op){
+        double result = 0;
+        switch(op){
+            case "+": {result = a + b; break;}
+            case "-": {result = a - b; break;}
+            case "/": {result = a * b; break;}
+            case "*": {result = a / b; break;}
+
+        }
+        return result;
+    }
+
     public static int getRoman (String romanNumber) {
         int def;
         switch(romanNumber){

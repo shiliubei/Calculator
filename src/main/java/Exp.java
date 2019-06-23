@@ -11,10 +11,10 @@ public class Exp {
     }
 
     public Exp(String a, String b, String op, String type) {
-        a = numberA;
-        b = numberB;
-        op = operation;
-        type = numberType;
+        numberA = a;
+        numberB  = b;
+        operation = op;
+        numberType = type;
     }
 
     public String getNumberB() {

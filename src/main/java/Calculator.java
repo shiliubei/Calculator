@@ -72,17 +72,31 @@ public class Calculator {
         String b = exp.getNumberB();
         String op = exp.getOperation();
         String type = exp.getNumberType();
+        //int aNum = Integer.parseInt(a);
+        //int bNum = Integer.parseInt(b);
 
         int numberA;
         int numberB;
+        double result;
         if(type.equals("roman")){
            numberA = getRoman(a);
            numberB = getRoman(b);
-            //to do
+           result = operate(numberA,numberB,op);
+           if(result%1==0){
+               Result res = new Result(result,type);
+           } else {
+               Result res = new Result(a +"/"+b,type);
+           }
         }
         if(type.equals("arabic")){
             numberA = Integer.parseInt(a);
             numberB = Integer.parseInt(b);
+            result = operate(numberA,numberB,op);
+            if(result%1==0){
+                Result res = new Result(result,type);
+            } else {
+                Result res = new Result(a +"/"+b,type);
+            }
         }
 
 
@@ -94,8 +108,8 @@ public class Calculator {
         switch(op){
             case "+": {result = a + b; break;}
             case "-": {result = a - b; break;}
-            case "/": {result = a * b; break;}
-            case "*": {result = a / b; break;}
+            case "*": {result = a * b; break;}
+            case "/": {result = a / b; break;}
 
         }
         return result;

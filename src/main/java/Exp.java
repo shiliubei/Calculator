@@ -34,7 +34,7 @@ public class Exp {
     }
 
     public String print(){
-        return "Number a" + this.numberA+ "Operation = " + this.operation + "Number b =" + this.numberB + "Type" + this.numberType;
+        return "Number a = " + this.numberA+ "Operation = " + this.operation + "Number b =" + this.numberB + "Type: " + this.numberType;
     }
 
     //public

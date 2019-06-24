@@ -3,9 +3,16 @@ public class Result {
     public Result(){
 
     }
-    public Result (int result, String numberType) {
-        int res = result;
+    public Result (double result, String numberType) {
+        double res = result;
         String type = numberType;
         //if ()
+
     }
+
+    public Result(String result, String numberType){
+
+    }
+
+
 }

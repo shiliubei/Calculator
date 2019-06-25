@@ -1,4 +1,6 @@
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,6 +12,9 @@ public class Calculator {
         System.out.println("Введите выражение вида \"число\" \"операция\" \"число\" ");
         String line = scnr.nextLine();
         System.out.println(parse(line).print());
+        //execute(parse(line));
+        System.out.println(execute(parse(line)).print());
+        displayResult(execute(parse(line)));
     }
 
     public static Exp parse(String line) {
@@ -62,12 +67,12 @@ public class Calculator {
             System.out.println("Выражение не соответствует нужному виду");
         }
 
-        Exp exp = new Exp("1","1","1","1");
+        Exp exp = new Exp("1", "1", "1", "1");
         return exp;
 
     }
 
-    public static Result Execute (Exp exp){
+    public static Result execute(Exp exp) {
         String a = exp.getNumberA();
         String b = exp.getNumberB();
         String op = exp.getOperation();
@@ -77,25 +82,32 @@ public class Calculator {
 
         int numberA;
         int numberB;
-        double result;
-        if(type.equals("roman")){
-           numberA = getRoman(a);
-           numberB = getRoman(b);
-           result = operate(numberA,numberB,op);
-           if(result%1==0){
-               Result res = new Result(result,type);
-           } else {
-               Result res = new Result(a +"/"+b,type);
-           }
+        Double result;
+        if (type.equals("roman")) {
+            numberA = fromRomanToArabic(a);
+            numberB = fromRomanToArabic(b);
+            result = operate(numberA, numberB, op);
+
+            if (result % 1 == 0) {
+                int resultInt = result.intValue();
+                type = "roman";
+                Result res = new Result(resultInt, type);
+            } else {
+                type = "roman";
+                Result res = new Result(a + "/" + b,type );
+            }
         }
-        if(type.equals("arabic")){
+        if (type.equals("arabic")) {
             numberA = Integer.parseInt(a);
             numberB = Integer.parseInt(b);
-            result = operate(numberA,numberB,op);
-            if(result%1==0){
-                Result res = new Result(result,type);
+            result = operate(numberA, numberB, op);
+            if (result % 1 == 0) {
+                type = "arabic";
+                int resultInt = result.intValue();
+                Result res = new Result(resultInt, type);
             } else {
-                Result res = new Result(a +"/"+b,type);
+                type = "arabic";
+                Result res = new Result(a + "/" + b, type);
             }
         }
 
@@ -103,40 +115,132 @@ public class Calculator {
         return new Result();
     }
 
-    public static double operate (int a, int b, String op){
-        double result = 0;
-        switch(op){
-            case "+": {result = a + b; break;}
-            case "-": {result = a - b; break;}
-            case "*": {result = a * b; break;}
-            case "/": {result = a / b; break;}
+    public static double operate(int a, int b, String op) {
+        double result=5;
+        switch (op) {
+            case "+": {
+                result = a + b;
+                return result;
+                //break;
+            }
+            case "-": {
+                result = a - b;
+                return result;
+               // break;
+            }
+            case "*": {
+                result = a * b;
+                return result;
+               // break;
+            }
+            case "/": {
+                result = a / b;
+                return result;
+                //break;
+            }
 
         }
         return result;
     }
 
-    public static int getRoman (String romanNumber) {
+    public static int fromRomanToArabic(String romanNumber) {
         int def;
-        switch(romanNumber){
+        switch (romanNumber) {
 
-            case "I": {def = 1; break;}
-            case "II": {def = 2; break;}
-            case "III": {def = 3; break;}
-            case "IV": {def = 4; break;}
-            case "V": {def = 5; break;}
-            case "VI": {def = 6; break;}
-            case "VII": {def = 7; break;}
-            case "VIII": {def = 8; break;}
-            case "IX": {def = 9; break;}
-            case "X": {def = 10; break;}
-            default : {
-             // createException("Число должно находиться в диапазоне от I до X включительно.");
+            case "I": {
+                def = 1;
+                break;
+            }
+            case "II": {
+                def = 2;
+                break;
+            }
+            case "III": {
+                def = 3;
+                break;
+            }
+            case "IV": {
+                def = 4;
+                break;
+            }
+            case "V": {
+                def = 5;
+                break;
+            }
+            case "VI": {
+                def = 6;
+                break;
+            }
+            case "VII": {
+                def = 7;
+                break;
+            }
+            case "VIII": {
+                def = 8;
+                break;
+            }
+            case "IX": {
+                def = 9;
+                break;
+            }
+            case "X": {
+                def = 10;
+                break;
+            }
+            default: {
+                // createException("Число должно находиться в диапазоне от I до X включительно.");
                 def = 0;
                 break;
             }
         }
         return def;
 
+    }
+
+    public static void displayResult(Result result) {
+        if (result.getType().equals("roman")) {
+            System.out.println(getRoman(result.getRes()));
+        }
+        if(result.getType().equals("arabic")){
+            System.out.println(result.getRes());
+        }else {
+            System.out.println(result.getResStr());
+        }
+    }
+
+    public static String getRoman(int Int) {
+        LinkedHashMap<String, Integer> roman_numerals = new LinkedHashMap<String, Integer>();
+        roman_numerals.put("M", 1000);
+        roman_numerals.put("CM", 900);
+        roman_numerals.put("D", 500);
+        roman_numerals.put("CD", 400);
+        roman_numerals.put("C", 100);
+        roman_numerals.put("XC", 90);
+        roman_numerals.put("L", 50);
+        roman_numerals.put("XL", 40);
+        roman_numerals.put("X", 10);
+        roman_numerals.put("IX", 9);
+        roman_numerals.put("V", 5);
+        roman_numerals.put("IV", 4);
+        roman_numerals.put("I", 1);
+        String res = "";
+        for (Map.Entry<String, Integer> entry : roman_numerals.entrySet()) {
+            int matches = Int / entry.getValue();
+            res += repeat(entry.getKey(), matches);
+            Int = Int % entry.getValue();
+        }
+        return res;
+    }
+
+    public static String repeat(String s, int n) {
+        if (s == null) {
+            return null;
+        }
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb.append(s);
+        }
+        return sb.toString();
     }
 
 }

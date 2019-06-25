@@ -1,18 +1,40 @@
 public class Result {
 
-    public Result(){
+    int res;
+    String resStr;
+    String type;
+
+    public Result() {
 
     }
-    public Result (double result, String numberType) {
-        double res = result;
-        String type = numberType;
+
+    public Result(int result, String numberType) {
+        res = result;
+        type = numberType;
         //if ()
 
     }
 
-    public Result(String result, String numberType){
+    public Result(String result, String numberType) {
+        resStr = result;
+        type = numberType;
+    }
 
+    public String print(){
+        return "Result = " + this.res+  "Type: " + this.type;
     }
 
 
+
+    public int getRes() {
+        return res;
+    }
+
+    public String getResStr() {
+        return resStr;
+    }
+
+    public String getType() {
+        return type;
+    }
 }

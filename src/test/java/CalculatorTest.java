@@ -9,10 +9,10 @@ import static org.junit.Assert.assertThat;
 public class CalculatorTest {
 
     /**
-     * Test addUser.
+     * Test calculator.
      */
     @Test
-    public void whenUserThenAddUser() {
+    public void whenParse() {
         Calculator calc = new Calculator();
         calc.parse("1 + 10");
         Exp exp = new Exp("1", "1", "+", "arabic");

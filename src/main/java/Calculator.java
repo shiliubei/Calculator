@@ -112,7 +112,7 @@ public class Calculator {
         }
 
 
-        return new Result();
+        return;
     }
 
     public static double operate(int a, int b, String op) {

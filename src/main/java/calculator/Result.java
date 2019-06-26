@@ -1,3 +1,5 @@
+package calculator;
+
 public class Result {
 
     int res;
@@ -21,7 +23,7 @@ public class Result {
     }
 
     public String print(){
-        return "Result = " + this.res+  "Type: " + this.type;
+        return "calculator.Result = " + this.res+  "Type: " + this.type;
     }
 
 

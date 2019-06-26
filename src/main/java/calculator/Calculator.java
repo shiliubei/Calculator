@@ -1,3 +1,4 @@
+package calculator;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class Calculator {
     }
 
     public static Exp parse(String line) {
-        //Exp expression = new Exp();
+        //calculator.Exp expression = new calculator.Exp();
 
         String a;
         String b;
@@ -26,7 +27,7 @@ public class Calculator {
         String type;
         //String line;
         Pattern arabic = Pattern.compile("([1-9]|10)");
-        Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X){1}");
+        Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)");
         Pattern operation = Pattern.compile("\\+|-|\\*|/");
         Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*)(\\s)+([1-9]|10)$");
         Pattern romanExpression = Pattern.compile("^(I|II|III|IV|V|VI|VII|VIII|IX|X){1}(\\s)+(\\+|-|\\*|/){1}(\\s)+(I|II|III|IV|V|VI|VII|VIII|IX|X){1}$");
@@ -37,7 +38,7 @@ public class Calculator {
         Matcher matcherOperation = operation.matcher(line);
         Matcher matcherArabicExp = arabicExpression.matcher(line);
         Matcher matcherRomanExp = romanExpression.matcher(line);
-        System.out.println("start");
+       // System.out.println("start");
 
         if (matcherArabicExp.find() || matcherRomanExp.find()) {
             if (matcherArabic.find()) {
@@ -79,7 +80,7 @@ public class Calculator {
         String type = exp.getNumberType();
         //int aNum = Integer.parseInt(a);
         //int bNum = Integer.parseInt(b);
-
+        Result res = new Result();
         int numberA;
         int numberB;
         Double result;
@@ -91,10 +92,10 @@ public class Calculator {
             if (result % 1 == 0) {
                 int resultInt = result.intValue();
                 type = "roman";
-                Result res = new Result(resultInt, type);
+                return  new Result(resultInt, type);
             } else {
                 type = "roman";
-                Result res = new Result(a + "/" + b,type );
+                return  new Result(a + "/" + b,type );
             }
         }
         if (type.equals("arabic")) {
@@ -104,15 +105,15 @@ public class Calculator {
             if (result % 1 == 0) {
                 type = "arabic";
                 int resultInt = result.intValue();
-                Result res = new Result(resultInt, type);
+                return  new Result(resultInt, type);
             } else {
                 type = "arabic";
-                Result res = new Result(a + "/" + b, type);
+                return  new Result(a + "/" + b, type);
             }
         }
 
 
-        return;
+       return  res;
     }
 
     public static double operate(int a, int b, String op) {

@@ -15,7 +15,7 @@ public class CalculatorTest {
      */
     @Test
     public void whenParse() {
-        Exp exp = new Exp("1", "1", "+", "arabic");
-        assertEquals(this.calc.parse("1 + 1"), exp);
+        Exp exp = new Exp("10", "3", "+", "arabic");
+        assertEquals(this.calc.parse("10 + 3"), exp);
     }
 }

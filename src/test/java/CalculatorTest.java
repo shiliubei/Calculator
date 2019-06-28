@@ -30,8 +30,8 @@ public class CalculatorTest {
     }
     @Test
     public void whenParseRomanTwoSimbolNumberAddition() {
-        Exp exp = new Exp("II", "VI", "+", "arabic");
-        assertEquals(this.calc.parse("II + VI"), exp);
+        Exp exp = new Exp("III", "VII", "+", "arabic");
+        assertEquals(this.calc.parse("III + VII"), exp);
     }
     @Test
     public void whenParseRomanC() {

@@ -13,32 +13,30 @@ public class Calculator {
         System.out.println("Введите выражение вида \"число\" \"операция\" \"число\" ");
         String line = scnr.nextLine();
         System.out.println(parse(line).print());
-        //execute(parse(line));
         System.out.println(execute(parse(line)).print());
         displayResult(execute(parse(line)));
     }
 
+
     public static Exp parse(String line) {
-        //calculator.Exp expression = new calculator.Exp();
 
         String a;
         String b;
         String op;
         String type;
-        //String line;
-        Pattern arabic = Pattern.compile("([1-9]|10)");
-        Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)");
+
+        Pattern arabic = Pattern.compile("(10|[1-9])");
+        Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)+");
         Pattern operation = Pattern.compile("\\+|-|\\*|/");
-        Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*)(\\s)+([1-9]|10)$");
+        Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*|/)(\\s)+([1-9]|10)$");
         Pattern romanExpression = Pattern.compile("^(I|II|III|IV|V|VI|VII|VIII|IX|X){1}(\\s)+(\\+|-|\\*|/){1}(\\s)+(I|II|III|IV|V|VI|VII|VIII|IX|X){1}$");
-        final String regex = "([1-9]|10){1}(\\s)+(\\+|-|\\*|\\/){1}(\\s)+([1-9]|10){1}";
+        //final String regex = "([1-9]|10){1}(\\s)+(\\+|-|\\*|\\/){1}(\\s)+([1-9]|10){1}";
 
         Matcher matcherArabic = arabic.matcher(line);
         Matcher matcherRoman = roman.matcher(line);
         Matcher matcherOperation = operation.matcher(line);
         Matcher matcherArabicExp = arabicExpression.matcher(line);
         Matcher matcherRomanExp = romanExpression.matcher(line);
-       // System.out.println("start");
 
         if (matcherArabicExp.find() || matcherRomanExp.find()) {
             if (matcherArabic.find()) {
@@ -122,22 +120,18 @@ public class Calculator {
             case "+": {
                 result = a + b;
                 return result;
-                //break;
             }
             case "-": {
                 result = a - b;
                 return result;
-               // break;
             }
             case "*": {
                 result = a * b;
                 return result;
-               // break;
             }
             case "/": {
                 result = a / b;
                 return result;
-                //break;
             }
 
         }
@@ -209,12 +203,8 @@ public class Calculator {
         }
     }
 
-    public static String getRoman(int Int) {
+    public static String getRoman(int arabicNumber) {
         LinkedHashMap<String, Integer> roman_numerals = new LinkedHashMap<String, Integer>();
-        roman_numerals.put("M", 1000);
-        roman_numerals.put("CM", 900);
-        roman_numerals.put("D", 500);
-        roman_numerals.put("CD", 400);
         roman_numerals.put("C", 100);
         roman_numerals.put("XC", 90);
         roman_numerals.put("L", 50);
@@ -226,9 +216,9 @@ public class Calculator {
         roman_numerals.put("I", 1);
         String res = "";
         for (Map.Entry<String, Integer> entry : roman_numerals.entrySet()) {
-            int matches = Int / entry.getValue();
+            int matches = arabicNumber / entry.getValue();
             res += repeat(entry.getKey(), matches);
-            Int = Int % entry.getValue();
+            arabicNumber = arabicNumber % entry.getValue();
         }
         return res;
     }

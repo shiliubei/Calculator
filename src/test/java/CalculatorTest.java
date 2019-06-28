@@ -1,6 +1,8 @@
 
 import calculator.Calculator;
 import calculator.Exp;
+import calculator.Parser;
+import calculator.Result;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -16,26 +18,49 @@ public class CalculatorTest {
     @Test
     public void whenParseArabicAddition() {
         Exp exp = new Exp("5", "3", "+", "arabic");
-        assertEquals(this.calc.parse("5 + 3"), exp);
+        Parser parser = new Parser();
+        assertEquals(parser.parse("5 + 3"), exp);
     }
     @Test
     public void whenParseRomanAddition() {
         Exp exp = new Exp("I", "V", "+", "arabic");
-        assertEquals(this.calc.parse("I + V"), exp);
+        Parser parser = new Parser();
+        assertEquals(parser.parse("I + V"), exp);
     }
     @Test
     public void whenParseArabicTwoDigitNumberAddition() {
         Exp exp = new Exp("10", "3", "+", "arabic");
-        assertEquals(this.calc.parse("10 + 3"), exp);
+        Parser parser = new Parser();
+        assertEquals(parser.parse("10 + 3"), exp);
     }
     @Test
     public void whenParseRomanTwoSimbolNumberAddition() {
         Exp exp = new Exp("III", "VII", "+", "arabic");
-        assertEquals(this.calc.parse("III + VII"), exp);
+        Parser parser = new Parser();
+        assertEquals(parser.parse("III + VII"), exp);
     }
     @Test
     public void whenParseRomanC() {
-        Exp exp = new Exp("IX", "X", "+", "arabic");
-        assertEquals(this.calc.parse("IX + X"), exp);
+        Exp exp = new Exp("IX", "X", "/", "arabic");
+        Parser parser = new Parser();
+        assertEquals(parser.parse("IX / X"), exp);
+    }
+    @Test
+    public void whenGetResult() {
+        Exp exp = new Exp("5", "3", "+", "arabic");
+        Result res = new Result ("8", "arabic");
+        assertEquals(calc.execute(exp), res);
+    }
+    @Test
+    public void whenGetResultDevideArabic() {
+        Exp exp = new Exp("5", "3", "/", "arabic");
+        Result res = new Result ("5/3", "arabic");
+        assertEquals(calc.execute(exp), res);
+    }
+    @Test
+    public void whenGetResultDevideRoman() {
+        Exp exp = new Exp("I", "V", "/", "roman");
+        Result res = new Result ("I/V", "roman");
+        assertEquals(calc.execute(exp), res);
     }
 }

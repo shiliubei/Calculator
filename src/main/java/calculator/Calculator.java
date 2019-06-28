@@ -12,99 +12,50 @@ public class Calculator {
         Scanner scnr = new Scanner(System.in);
         System.out.println("Введите выражение вида \"число\" \"операция\" \"число\" ");
         String line = scnr.nextLine();
-        System.out.println(parse(line).print());
-        System.out.println(execute(parse(line)).print());
-        displayResult(execute(parse(line)));
+        Parser parser = new Parser();
+        displayResult(execute(parser.parse(line)));
     }
 
-
-    public static Exp parse(String line) {
-
-        String a;
-        String b;
-        String op;
-        String type;
-
-        Pattern arabic = Pattern.compile("(10|[1-9])");
-        Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)+");
-        Pattern operation = Pattern.compile("\\+|-|\\*|/");
-        Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*|/)(\\s)+([1-9]|10)$");
-        Pattern romanExpression = Pattern.compile("^(I|II|III|IV|V|VI|VII|VIII|IX|X){1}(\\s)+(\\+|-|\\*|/){1}(\\s)+(I|II|III|IV|V|VI|VII|VIII|IX|X){1}$");
-        //final String regex = "([1-9]|10){1}(\\s)+(\\+|-|\\*|\\/){1}(\\s)+([1-9]|10){1}";
-
-        Matcher matcherArabic = arabic.matcher(line);
-        Matcher matcherRoman = roman.matcher(line);
-        Matcher matcherOperation = operation.matcher(line);
-        Matcher matcherArabicExp = arabicExpression.matcher(line);
-        Matcher matcherRomanExp = romanExpression.matcher(line);
-
-        if (matcherArabicExp.find() || matcherRomanExp.find()) {
-            if (matcherArabic.find()) {
-                type = "arabic";
-                a = matcherArabic.group();
-                matcherArabic.find();
-                b = matcherArabic.group();
-                matcherOperation.find();
-                op = matcherOperation.group();
-                //System.out.printf("Number: %s Operation = %s Number b = %s Type = %s\n ", a, op, b, type);
-                Exp exp = new Exp(a, b, op, type);
-                return exp;
-            }
-            if (matcherRoman.find()) {
-                type = "roman";
-                a = matcherRoman.group();
-                matcherRoman.find();
-                b = matcherRoman.group();
-                matcherOperation.find();
-                op = matcherOperation.group();
-                //System.out.printf("Number: %s Operation = %s Number b = %s Type = %s\n ", a, op, b, type);
-                Exp exp = new Exp(a, b, op, type);
-                return exp;
-            }
-
-        } else {
-            System.out.println("Выражение не соответствует нужному виду");
-        }
-
-        Exp exp = new Exp("1", "1", "1", "1");
-        return exp;
-
-    }
 
     public static Result execute(Exp exp) {
         String a = exp.getNumberA();
         String b = exp.getNumberB();
         String op = exp.getOperation();
         String type = exp.getNumberType();
-        //int aNum = Integer.parseInt(a);
-        //int bNum = Integer.parseInt(b);
         Result res = new Result();
-        int numberA;
-        int numberB;
-        Double result;
+        double numberA;
+        double numberB;
+        Double result = 0d;
+
         if (type.equals("roman")) {
             numberA = fromRomanToArabic(a);
             numberB = fromRomanToArabic(b);
             result = operate(numberA, numberB, op);
-
+            type = "roman";
             if (result % 1 == 0) {
+                String resultStr = "";
                 int resultInt = result.intValue();
-                type = "roman";
-                return  new Result(resultInt, type);
+                if(resultInt<0){
+                    resultStr = "-"+getRoman(resultInt*-1);
+                } else{
+                    resultStr = getRoman(resultInt);
+                }
+                return  new Result(resultStr, type);
             } else {
-                type = "roman";
                 return  new Result(a + "/" + b,type );
             }
         }
         if (type.equals("arabic")) {
-            numberA = Integer.parseInt(a);
-            numberB = Integer.parseInt(b);
+            numberA = Double.parseDouble(a);
+            numberB = Double.parseDouble(b);
             result = operate(numberA, numberB, op);
             if (result % 1 == 0) {
                 type = "arabic";
                 int resultInt = result.intValue();
-                return  new Result(resultInt, type);
-            } else {
+
+                return  new Result(resultInt+"", type);
+            }
+            {
                 type = "arabic";
                 return  new Result(a + "/" + b, type);
             }
@@ -114,7 +65,7 @@ public class Calculator {
        return  res;
     }
 
-    public static double operate(int a, int b, String op) {
+    public static double operate(double a, double b, String op) {
         double result=5;
         switch (op) {
             case "+": {
@@ -142,34 +93,13 @@ public class Calculator {
         int def;
         switch (romanNumber) {
 
-            case "I": {
-                def = 1;
-                break;
-            }
-            case "II": {
-                def = 2;
-                break;
-            }
-            case "III": {
-                def = 3;
-                break;
-            }
-            case "IV": {
-                def = 4;
-                break;
-            }
-            case "V": {
-                def = 5;
-                break;
-            }
-            case "VI": {
-                def = 6;
-                break;
-            }
-            case "VII": {
-                def = 7;
-                break;
-            }
+            case "I": { def = 1; break; }
+            case "II": { def = 2; break; }
+            case "III": { def = 3; break; }
+            case "IV": { def = 4; break; }
+            case "V": { def = 5; break; }
+            case "VI": { def = 6;break; }
+            case "VII": { def = 7;break; }
             case "VIII": {
                 def = 8;
                 break;
@@ -183,7 +113,6 @@ public class Calculator {
                 break;
             }
             default: {
-                // createException("Число должно находиться в диапазоне от I до X включительно.");
                 def = 0;
                 break;
             }
@@ -193,14 +122,8 @@ public class Calculator {
     }
 
     public static void displayResult(Result result) {
-        if (result.getType().equals("roman")) {
-            System.out.println(getRoman(result.getRes()));
-        }
-        if(result.getType().equals("arabic")){
-            System.out.println(result.getRes());
-        }else {
             System.out.println(result.getResStr());
-        }
+
     }
 
     public static String getRoman(int arabicNumber) {

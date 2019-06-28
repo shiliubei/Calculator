@@ -1,5 +1,7 @@
 package calculator;
 
+import java.util.Objects;
+
 public class Result {
 
     int res;
@@ -10,12 +12,12 @@ public class Result {
 
     }
 
-    public Result(int result, String numberType) {
-        res = result;
-        type = numberType;
-        //if ()
-
-    }
+//    public Result(int result, String numberType) {
+//        res = result;
+//        type = numberType;
+//        //if ()
+//
+//    }
 
     public Result(String result, String numberType) {
         resStr = result;
@@ -23,7 +25,7 @@ public class Result {
     }
 
     public String print(){
-        return "calculator.Result = " + this.res+  "Type: " + this.type;
+        return "calculator.Result = " + this.resStr+  "Type: " + this.type;
     }
 
 
@@ -38,5 +40,17 @@ public class Result {
 
     public String getType() {
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Result result = (Result) o;
+        return Objects.equals(resStr, result.resStr) && Objects.equals(type, result.type);
     }
 }

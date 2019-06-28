@@ -19,7 +19,7 @@ public class Expression {
     public Expression() {
     }
 
-    public void execute() {
+    public void evaluate() {
         double numA;
         double numB;
         Double result = 0d;

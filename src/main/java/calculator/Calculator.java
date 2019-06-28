@@ -13,7 +13,7 @@ public class Calculator {
         System.out.println("Введите выражение вида \"число\" \"операция\" \"число\" ");
         String line = scnr.nextLine();
         Parser parser = new Parser();
-        parser.parse(line).execute();
+        parser.parse(line).evaluate();
     }
 
 }

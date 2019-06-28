@@ -9,11 +9,11 @@ public class Parser {
     private String line;
 
 
-    final private Pattern arabic = Pattern.compile("(10|[1-9])");
-    final private Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)+");
-    final private Pattern operation = Pattern.compile("\\+|-|\\*|/");
-    final private Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*|/)(\\s)+([1-9]|10)$");
-    final private Pattern romanExpression = Pattern.compile("^(I|II|III|IV|V|VI|VII|VIII|IX|X)(\\s)+(\\+|-|\\*|/)(\\s)+(I|II|III|IV|V|VI|VII|VIII|IX|X)$");
+    final private static Pattern arabic = Pattern.compile("(10|[1-9])");
+    final private static Pattern roman = Pattern.compile("(I|II|III|IV|V|VI|VII|VIII|IX|X)+");
+    final private static Pattern operation = Pattern.compile("\\+|-|\\*|/");
+    final private static Pattern arabicExpression = Pattern.compile("^([1-9]|10)(\\s)+(\\+|-|\\*|/)(\\s)+([1-9]|10)$");
+    final private static Pattern romanExpression = Pattern.compile("^(I|II|III|IV|V|VI|VII|VIII|IX|X)(\\s)+(\\+|-|\\*|/)(\\s)+(I|II|III|IV|V|VI|VII|VIII|IX|X)$");
 
     public Parser(String line) {
         this.line = line;
